@@ -3,11 +3,7 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
-interface BuyersPageProps {
-  searchParams?: Record<string, string>;
-}
-
-export default async function BuyersPage({ searchParams }: BuyersPageProps) {
+export default async function BuyersPage({ searchParams }: { searchParams?: any }) {
   // Pagination
   const page = Number(searchParams?.page || '1');
   const pageSize = 10;
