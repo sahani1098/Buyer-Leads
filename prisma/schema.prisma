@@ -1,0 +1,39 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Buyer {
+  id           String   @id @default(uuid())
+  fullName     String
+  email        String?
+  phone        String
+  city         String
+  propertyType String
+  bhk          String?
+  purpose      String
+  budgetMin    Int?
+  budgetMax    Int?
+  timeline     String
+  source       String
+  status       String   @default("New")
+  notes        String?
+  tags         String?  // store comma-separated values or JSON string
+  ownerId      String
+  updatedAt    DateTime @updatedAt
+  histories    BuyerHistory[]
+}
+
+model BuyerHistory {
+  id        String   @id @default(uuid())
+  buyerId   String
+  changedBy String
+  changedAt DateTime @default(now())
+  diff      String   // store JSON string instead of Json type in SQLite
+
+  buyer Buyer @relation(fields: [buyerId], references: [id])
+}
